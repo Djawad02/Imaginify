@@ -1,6 +1,12 @@
 "use client";
 import React from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, UserButton, SignedOut } from "@clerk/nextjs";
@@ -31,35 +37,38 @@ const MobileNav = () => {
               />
             </SheetTrigger>
             <SheetContent className="sheet-content sm:w-64">
-              <>
-                <Image src={logoImg} alt="logo" width={152} height={23} />
-                <ul className="header-nav_elements">
-                  {navLinks.map((link) => {
-                    const isActive = link.route === pathname;
-                    return (
-                      <li
-                        key={link.route}
-                        className={`${
-                          isActive && "gradient-text"
-                        } p-18 flex whitespace-nowrap text-dark-700`}
+              <SheetHeader>
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+
+                {/* Accessible for screen readers */}
+              </SheetHeader>
+              <Image src={logoImg} alt="logo" width={152} height={23} />
+              <ul className="header-nav_elements">
+                {navLinks.map((link) => {
+                  const isActive = link.route === pathname;
+                  return (
+                    <li
+                      key={link.route}
+                      className={`${
+                        isActive && "gradient-text"
+                      } p-18 flex whitespace-nowrap text-dark-700`}
+                    >
+                      <Link
+                        className="sidebar-link cursor-pointer"
+                        href={link.route}
                       >
-                        <Link
-                          className="sidebar-link cursor-pointer"
-                          href={link.route}
-                        >
-                          <Image
-                            src={link.icon}
-                            alt="logo"
-                            width={24}
-                            height={24}
-                          />
-                          {link.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </>
+                        <Image
+                          src={link.icon}
+                          alt="logo"
+                          width={24}
+                          height={24}
+                        />
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </SheetContent>
           </Sheet>
         </SignedIn>
